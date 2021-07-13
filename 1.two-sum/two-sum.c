@@ -23,11 +23,7 @@ int *twoSum(int *nums, int numsSize, int target, int *returnSize) {
 
   for (int i = 0; i < numsSize; i++) {
     int pos = hash(nums[i]);
-    if (ht[pos].value == -1) // not exist
-    {
-      int insert_pos = hash(target - nums[i]);
-      ht[insert_pos].value = i;
-    } else {
+    if (ht[pos].value != -1) {
       if (nums[ht[pos].value] == target - nums[i] &&
           ht[pos].value != i) { // get answer
         result[0] = ht[pos].value;
@@ -44,12 +40,17 @@ int *twoSum(int *nums, int numsSize, int target, int *returnSize) {
           } else
             t = t->next;
         }
-        // collision
-        struct bucket *new = (struct bucket *)malloc(sizeof(struct bucket));
-        new->value = i;
-        new->next = ht[pos].next;
-        ht[pos].next = new;
       }
+    }
+
+    int insert_pos = hash(target - nums[i]);
+    if (ht[insert_pos].value == -1)
+      ht[insert_pos].value = i;
+    else { // collision
+      struct bucket *new = (struct bucket *)malloc(sizeof(struct bucket));
+      new->value = i;
+      new->next = ht[insert_pos].next;
+      ht[insert_pos].next = new;
     }
   }
   return NULL;
@@ -57,13 +58,13 @@ int *twoSum(int *nums, int numsSize, int target, int *returnSize) {
 
 int main(int argc, char *argv[]) {
   // int nums[] = {3, 6, 5, 1, 8};
-    int nums[] = {2, 7, 11, 15};
+  int nums[] = {2, 7, 11, 15};
   // int *result = (int *)malloc(sizeof(int)*2);
   // twoSum(nums,5,7,&result);
   int returnSize = 2;
 
   // int *result = twoSum(nums, 5, 7, &returnSize);
-    int *result = twoSum(nums, 4, 9, &returnSize);
+  int *result = twoSum(nums, 4, 9, &returnSize);
   for (int i = 0; i < 4; i++) {
     printf("%d ", nums[i]);
   }
