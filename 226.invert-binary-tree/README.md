@@ -1,0 +1,3 @@
+# [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-treeA/)
+Adjust base case, recursive ending, empty input...
+
